@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8b3b0877-64bd-4325-994a-c48a563377d2" name="Changes" comment="" />
+    <list default="true" id="8b3b0877-64bd-4325-994a-c48a563377d2" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/admin/admin.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/admin/phpinfo.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/admin/uploads.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/buttons.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin/buttons.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -39,7 +48,13 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\wamp64\www\trumpdjvance2024\admin" />
+    </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -51,6 +66,8 @@
       <updated>1722759859560</updated>
       <workItem from="1722759874387" duration="1223000" />
       <workItem from="1722762854930" duration="1396000" />
+      <workItem from="1722764371362" duration="761000" />
+      <workItem from="1722768676563" duration="11982000" />
     </task>
     <servers />
   </component>

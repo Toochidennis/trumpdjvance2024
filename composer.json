@@ -1,5 +1,6 @@
 {
     "require": {
-        "square/square": "^37.1"
+        "square/square": "^37.1",
+      "ext-mysqli": "*"
     }
 }
