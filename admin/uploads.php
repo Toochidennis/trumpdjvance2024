@@ -21,75 +21,38 @@ $message = "";
 $error = "";
 
 // Check if the form is submitted
+// Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Directory where files will be saved
-    $targetDir = "uploads/";
+    $title = isset($_POST['title']) ? $_POST['title'] : '';
+    $description = isset($_POST['description']) ? $_POST['description'] : '';
 
-    // Create the uploads directory if it doesn't exist
-    if (!is_dir($targetDir)) {
-        mkdir($targetDir, 0777, true);
+    $video_url = '';
+    if (isset($_FILES['video_url']) && $_FILES['video_url']['error'] == UPLOAD_ERR_OK) {
+        $video_url = 'uploads/videos/' . basename($_FILES['video_url']['name']);
+        move_uploaded_file($_FILES['video_url']['tmp_name'], $video_url);
     }
 
-    // Check if the files are uploaded
-    if (isset($_FILES["video_url"]) && isset($_FILES["image_url"])) {
-        // Check for upload errors
-        if ($_FILES["video_url"]["error"] === UPLOAD_ERR_OK && $_FILES["image_url"]["error"] === UPLOAD_ERR_OK) {
-            // File paths
-            $videoFileName = basename($_FILES["video_url"]["name"]);
-            $imageFileName = basename($_FILES["image_url"]["name"]);
-            $targetVideoPath = $targetDir . $videoFileName;
-            $targetImagePath = $targetDir . $imageFileName;
+    $image_url = '';
+    if (isset($_FILES['image_url']) && $_FILES['image_url']['error'] == UPLOAD_ERR_OK) {
+        $image_url = 'uploads/images/' . basename($_FILES['image_url']['name']);
+        move_uploaded_file($_FILES['image_url']['tmp_name'], $image_url);
+    }
 
-            // Get file extensions
-            $videoFileType = strtolower(pathinfo($targetVideoPath, PATHINFO_EXTENSION));
-            $imageFileType = strtolower(pathinfo($targetImagePath, PATHINFO_EXTENSION));
 
-            // Get MIME types
-            $finfo = finfo_open(FILEINFO_MIME_TYPE);
-            $videoMimeType = finfo_file($finfo, $_FILES["video_url"]["tmp_name"]);
-            $imageMimeType = finfo_file($finfo, $_FILES["image_url"]["tmp_name"]);
-            finfo_close($finfo);
+    $stmt = $conn->prepare("INSERT INTO videos (title, description, video_url, image_url) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("ssss", $title, $description, $video_url, $image_url);
 
-            // Valid formats and MIME types
-            $validVideoFormats = array("mp4", "avi", "mov", "mpeg");
-            $validImageFormats = array("jpg", "jpeg", "png", "gif");
-            $validVideoMimeTypes = array("video/mp4", "video/x-msvideo", "video/quicktime", "video/mpeg");
-            $validImageMimeTypes = array("image/jpeg", "image/png", "image/gif");
-
-            // Check file size (limit to 500MB)
-            if ($_FILES["video_url"]["size"] > 500 * 1024 * 1024) {
-                $error = "Sorry, your video file is too large. Maximum file size is 500MB.";
-            } elseif (in_array($videoFileType, $validVideoFormats) && in_array($videoMimeType, $validVideoMimeTypes) &&
-                in_array($imageFileType, $validImageFormats) && in_array($imageMimeType, $validImageMimeTypes)) {
-                // Upload files to server
-                if (move_uploaded_file($_FILES["video_url"]["tmp_name"], $targetVideoPath) && move_uploaded_file($_FILES["image_url"]["tmp_name"], $targetImagePath)) {
-                    // Insert video information into the database
-                    $title = $conn->real_escape_string($_POST['title']);
-                    $description = $conn->real_escape_string($_POST['description']);
-                    $videoUrl = $conn->real_escape_string($targetVideoPath);
-                    $imageUrl = $conn->real_escape_string($targetImagePath);
-
-                    $sql = "INSERT INTO videos (title, description, video_url, image_url) VALUES ('$title', '$description', '$videoUrl', '$imageUrl')";
-                    if ($conn->query($sql) === TRUE) {
-                        $message = "The file " . htmlspecialchars($videoFileName) . " has been uploaded.";
-                    } else {
-                        $error = "Error: " . $sql . "<br>" . $conn->error;
-                    }
-                } else {
-                    $error = "Sorry, there was an error uploading your file.";
-                }
-            } else {
-                $error = "Sorry, only MP4, AVI, MOV, MPEG videos and JPG, JPEG, PNG, GIF images are allowed to upload.";
-            }
-        } else {
-            $error = "File upload error: " . $_FILES['video_url']['error'] . " for video or " . $_FILES['image_url']['error'] . " for image.";
-        }
+    if ($stmt->execute()) {
+        echo "New record created successfully";
     } else {
-        $error = "No file uploaded.";
+        echo "Error: " . $stmt->error;
     }
-}
 
-$conn->close();
+    $stmt->close();
+    $conn->close();
+} else {
+    echo "Invalid request method.";
+}
 ?>
 
 <!DOCTYPE html>
