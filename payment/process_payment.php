@@ -10,5 +10,6 @@ $client = new SquareClient([
     'accessToken' => $accessToken,
     'environment' => 'sandbox'
     ]);
-
     
+
+
